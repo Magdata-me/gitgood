@@ -1,0 +1,65 @@
+## Il Dataset
+Come esercizio di data meditation ho scelto di appuntare i grammi di pasta mangiati al giorno (dal 11/12/23 al 3/03/24) e il tipo di pasta e se era in bianco o meno. A questi dati sono stati aggiunti il minutaggio della pasta, ricavato dalla confezione della pasta. Sarebbe stato interessante vedere anche il brand, ma a parte il riso tendo a comprare solo pasta Rummo, per cui ho deciso di non aggiungere un’ulteriore colonna. 
+A questo punto ho ricopiato i dati a mano dalla carta a fogli di Google e mi sono importata il dataset su Google Looker.
+
+
+Per iniziare il Lavoro è stato preso come riferimento per il tema un'immagine, usando l'apposita 
+funzione di Google Looker. 
+https://www.pastarummo.it/wp-content/uploads/2019/05/rummo_pack_home_new-1.jpg
+L’immagine scelta è appunto una confezione di pasta Rummo. 
+Come prima cosa ho messo un titolo che ho poi moltiplicato nelle pagine seguenti. 
+Ho costruito le pagine e le ho rinominate, avendo in mente di fare 2 analisi prinpali, una con il focus sulla data meditation e l’altra globale incentrata sul consumo di pasta. Ho inserito delle icone di personalizzazinoe del menu e poi mi sono dedicata alla costruzione dei grafici.
+
+## I Grafici
+La Dashboard
+Nella Dashboard ho messo gli indicatori principali, tramite la scheda, ovvero il consumo totale di Pasta, media giornaliera e la media di cottura. Tramite un grafico a barre 
+Il Primo Grafico costruito è stato il grafico a barre per vedere quale tipo di pasta è stato il più consumato. La pasta più mangiata è stata il riso (20 volte). Tramite la tabella con barre si nota che in gr la pasta più consumata è quella all’uovo (evidenziata in rosso tramite la formattazione condizionale), occorre però specificare che è anche la pasta con un peso specifico superiore.
+Nell’ultimo grafico della dashboard possiamo invece vedere il consumo nel tempo di pasta che presenta il suo picco nel periodo di Natale. Faccio notare che si è dovuto usare un formato data personalizzato altrimenti il formato data sarebbe stato quello americano. 
+
+## Preferenze Personali 
+Nella seconda pagina a cui si arriva cliccando l’icona del cuore, andiamo a vedere le preferenze. Il grafico Sunkey ci aiuta a vedere quali tipi di paste sono preferite al sugo e quali no.  Il riso ad esempio è preferito in bianco, mentre la pasta all’uovo al sugo. 
+Tramite un campo calcolato mi sono andata a estrapolare i giorni della settimana. La formula sottostante è stata utilizzata perché altrimenti le visualizzazioni dei giorni sarebbero state in inglese:
+
+Campo Calcolato “giorni”
+
+CASE
+  WHEN FORMAT_DATETIME('%A',Data) = 'Sunday' THEN 'Domenica'
+  WHEN FORMAT_DATETIME('%A', Data) = 'Monday' THEN 'Lunedì'
+  WHEN FORMAT_DATETIME('%A', Data) = 'Tuesday' THEN 'Martedì'
+  WHEN FORMAT_DATETIME('%A', Data) = 'Wednesday' THEN 'Mercoledì'
+  WHEN FORMAT_DATETIME('%A',Data) = 'Thursday' THEN 'Giovedì'
+  WHEN FORMAT_DATETIME('%A', Data) = 'Friday' THEN 'Venerdì'
+  WHEN FORMAT_DATETIME('%A', Data) = 'Saturday' THEN 'Sabato'
+END
+
+
+In questo modo risulta evidente dalla tabella con mappa termica che la domenica viene preferita la pasta all’uovo e il mercoledì le farfalle. 
+
+ La stessa cosa è stata fatta per l’uitimo grafico a barre in pila in cui sono andata a vedere quale pasta fosse preferita nei weekend e quale nei giorni lavorativi. 
+
+Campo Calcolato “Lavorativo o Festivo”
+
+CASE 
+  WHEN EXTRACT(DAYOFWEEK FROM Data) = 1 THEN "Weekend" 
+  WHEN EXTRACT(DAYOFWEEK FROM Data) = 7 THEN "Weekend"
+  ELSE "Settimanale" 
+END
+
+## E gli Altri?
+
+In questa sezione mi sono importata altri dataset per poter fare un’analisi comparativa con l’Italia.
+Nel primo grafico è stato messo in rapporto il consumo in Italia di pasta con il resto del mondo.
+Nei grafici successivi invece è stato scaricato un dataset dall’Istat in un’indagine del L'indagine campionaria "Aspetti della vita quotidiana" , ho scaricato la tabella in Excel e ho importato i dati che mi servivano in Google Fogli e successivamente in google Looker. A questo punto per ricavare i dati in base alle ripartizioni Geografiche ho dovuto esaguire una join  aiutandomi con l’importazione della Tabella “Ripartizione Geografica”, usata nei dati del Covid. I Dati sono stati tutti modificati in modo che le diciture potessero coincidere. 
+A questo punto è stato possibile vedere il consumo di pasta per macro area geografica in Italia (tramite il grafico a bolle e il grafico ad anello.
+Pasta In Italia
+
+Nell’ultima sessione si è invece fatto un focus sulle regioni italiane, tramite un grafico a mappa e una tabella con mappa termica. 
+In ultimo sono stati aggiunti dei pulsanti che portano direttamente alle fonti e i filtri che permettono un’analisi più approfondita su aspetti particolare. Si può ad esempio selezionare il periodo di tempo o il tipo di pasta. 
+
+
+LINK AL REPORT https://lookerstudio.google.com/reporting/b7004684-cf04-406c-85ba-21e95b74e2d0/page/p_whsv2gs3ed?s=qr3yu10VxHw
+Link Data Meditation sulla Pasta https://docs.google.com/spreadsheets/d/e/2PACX-1vSl1xglNvON430x5T6M2CwFHhXDZs0PsEJ9q5ZVU4vakO8ZFAMEa9aTeVLk4xP7P-VP9IgMeDRephmY/pubhtml
+Link tabella fogli Istat https://docs.google.com/spreadsheets/d/e/2PACX-1vRAQsW4mQjX_TijAON318ha0dfLAXhnj_vBbKW0Ik4mjKqaabHXZfAkmCEhNfvwUSCj13B4yW9__yVJ/pubhtml?gid=0&single=true
+
+
+
